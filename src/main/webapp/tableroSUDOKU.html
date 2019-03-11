@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Games 2019</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+<link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+<!--===============================================================================================-->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+	integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+	crossorigin="anonymous">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="css/util.css">
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<link rel="stylesheet" type="text/css" href="css/tablero.css">
+<link rel="stylesheet" type="text/css" href="css/tablerosudoku.css">
+<!--===============================================================================================-->
+
+</head>
+<body>
+
+	<div class="container">
+		<div class="row">
+			<b>TU TABLERO</b>
+		</div>
+		<div class="row">
+			<div class="table table-sm">
+				<table id="grid">
+					<tr>
+						<td><input id="c0" type="text" disabled></td>
+						<td><input id="c1" type="text" disabled></td>
+						<td><input id="c2" type="text" onchange = "enviarCasilla('c2', 2)"></td>
+
+						<td><input id="c3" type="text"></td>
+						<td><input id="c4" type="text" disabled></td>
+						<td><input id="c5" type="text"></td>
+
+						<td><input id="c6" type="text"></td>
+						<td><input id="c7" type="text"></td>
+						<td><input id="c8" type="text"></td>
+					</tr>
+
+					<tr>
+						<td><input id="c9" type="text" disabled></td>
+						<td><input id="c10" type="text"></td>
+						<td><input id="c11" type="text"></td>
+
+						<td><input id="c12" type="text" disabled></td>
+						<td><input id="c13" type="text" disabled></td>
+						<td><input id="c14" type="text" disabled></td>
+
+						<td><input id="c15" type="text"></td>
+						<td><input id="c16" type="text"></td>
+						<td><input id="c17" type="text"></td>
+					</tr>
+
+					<tr>
+						<td><input id="c18" type="text"></td>
+						<td><input id="c19" type="text" disabled></td>
+						<td><input id="c20" type="text" disabled></td>
+
+						<td><input id="c21" type="text"></td>
+						<td><input id="c22" type="text"></td>
+						<td><input id="c23" type="text"></td>
+
+						<td><input id="c24" type="text"></td>
+						<td><input id="c25" type="text" disabled></td>
+						<td><input id="c26" type="text"></td>
+					</tr>
+
+					<tr>
+						<td><input id="c27" type="text" disabled></td>
+						<td><input id="c28" type="text"></td>
+						<td><input id="c29" type="text"></td>
+
+						<td><input id="c30" type="text"></td>
+						<td><input id="c31" type="text" disabled></td>
+						<td><input id="c32" type="text"></td>
+
+						<td><input id="c33" type="text"></td>
+						<td><input id="c34" type="text"></td>
+						<td><input id="c35" type="text" disabled></td>
+					</tr>
+
+					<tr>
+						<td><input id="c36" type="text" disabled></td>
+						<td><input id="c37" type="text"></td>
+						<td><input id="c38" type="text"></td>
+
+						<td><input id="c39" type="text" disabled></td>
+						<td><input id="c40" type="text"></td>
+						<td><input id="c41" type="text" disabled></td>
+
+						<td><input id="c42" type="text"></td>
+						<td><input id="c43" type="text"></td>
+						<td><input id="c44" type="text" disabled></td>
+					</tr>
+
+					<tr>
+						<td><input id="c45" type="text" disabled></td>
+						<td><input id="c46" type="text"></td>
+						<td><input id="c47" type="text"></td>
+
+						<td><input id="c48" type="text"></td>
+						<td><input id="c49" type="text" disabled></td>
+						<td><input id="c50" type="text"></td>
+
+						<td><input id="c51" type="text"></td>
+						<td><input id="c52" type="text"></td>
+						<td><input id="c53" type="text" disabled></td>
+					</tr>
+
+					<tr>
+						<td><input id="c54" type="text"></td>
+						<td><input id="c55" type="text" disabled></td>
+						<td><input id="c56" type="text"></td>
+
+						<td><input id="c57" type="text"></td>
+						<td><input id="c58" type="text"></td>
+						<td><input id="c59" type="text"></td>
+
+						<td><input id="c60" type="text" disabled></td>
+						<td><input id="c61" type="text" disabled></td>
+						<td><input id="c62" type="text"></td>
+					</tr>
+
+					<tr>
+						<td><input id="c63" type="text"></td>
+						<td><input id="c64" type="text"></td>
+						<td><input id="c65" type="text"></td>
+
+						<td><input id="c66" type="text" disabled></td>
+						<td><input id="c67" type="text" disabled></td>
+						<td><input id="c68" type="text" disabled></td>
+
+						<td><input id="c69" type="text"></td>
+						<td><input id="c70" type="text"></td>
+						<td><input id="c71" type="text" disabled></td>
+					</tr>
+
+					<tr>
+						<td><input id="c72" type="text"></td>
+						<td><input id="c73" type="text"></td>
+						<td><input id="c74" type="text"></td>
+
+						<td><input id="c75" type="text"></td>
+						<td><input id="c76" type="text" disabled></td>
+						<td><input id="c77" type="text"></td>
+
+						<td><input id="c78" type="text"></td>
+						<td><input id="c79" type="text" disabled></td>
+						<td><input id="c80" type="text" disabled></td>
+					</tr>
+				</table>
+			</div>
+			<div class="row">
+				<button class="btn btn-warning" id="btnEnviar"
+					onclick="enviarTablero()">Enviar</button>
+			</div>
+		</div>
+		<br>
+	</div>
+	<!--===============================================================================================-->
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/animsition/js/animsition.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+
+	<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/daterangepicker/moment.min.js"></script>
+	<script src="vendor/daterangepicker/daterangepicker.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/countdowntime/countdowntime.js"></script>
+	<!--===============================================================================================-->
+	<script>
+		function enviarTablero() {
+			var numeros = [];
+			for (var i = 0; i < 81; i++) {
+				numeros[i] = document.getElementById("c"+i.toString()).value;
+			}
+			var p = {
+				TYPE : "MOVEMENT",
+				coordinates : numeros
+			};
+			ws.send(JSON.stringify(p));
+		}
+
+		function enviarCasilla(casilla, posicion) {
+			var numeros = [posicion, document.getElementById(casilla).value];
+			var p = {
+				TYPE : "COLOREAR",
+				coordinates : numeros
+			};
+			ws.send(JSON.stringify(p));
+		}
+	</script>
+</body>
+</html>

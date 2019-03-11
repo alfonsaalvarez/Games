@@ -1,0 +1,96 @@
+<html>
+<body>
+	<h2>Ejemplos Spring</h2>
+
+	<table border="1">
+		<tr>
+			<th>Pepe</th>
+			<th>Ana</th>
+		</tr>
+		<tr>
+			<td>0. <a
+				href="http://localhost:8080/register?email=pepe@pepe.com&userName=pepe&pwd1=pepe123&pwd2=pepe123">register</a><br>
+				1. <a href="javascript:login('pepe','pepe123')">login</a><br> 2. <a
+				href="javascript:joinGame('Piedra, papel, tijera')">joinGame</a><br>
+				5. <a href="javascript:move(0)">Piedra</a><br>
+				<br> 7. <a href="javascript:move(2)">Tijera</a><br>
+				<br> 9. <a href="javascript:move(1)">Papel</a><br>
+			</td>
+			<td>0. <a
+				href="http://localhost:8080/register?email=ana@ana.com&userName=ana&pwd1=ana123&pwd2=ana123">register</a><br>
+				3. <a href="javascript:login('ana','ana123')">login</a><br>
+				4. <a
+				href="javascript:joinGame('Piedra, papel, tijera')">joinGame</a><br>
+				<br> 6. <a href="javascript:move(1)">Papel</a><br>
+				<br> 8.<a href="javascript:move(0)">Piedra</a><br>
+				<br> 10. <a href="javascript:move(0)">Piedra</a><br>
+			</td>
+		</tr>
+	</table>
+	<div id="textosRecibidos">
+	</div>
+
+	<a href="post/index.html">Ir a ejemplos con JSON, POST y jQuery</a>
+	<br>
+	<a href="angular/index.html">Ir a ejemplos con JSON, POST y Angular</a>
+	<br>
+
+	<script>
+		var ws;
+		
+		function login(userName,pwd) {
+			var request = new XMLHttpRequest();
+			request.open("GET",
+					"http://localhost:8080/login?userName=" + userName + "&pwd=" + pwd);
+			request.onreadystatechange = function() {
+				if (request.readyState == 4) {
+					add(request.responseText);
+					ws = new WebSocket("ws://localhost:8080/gamews");
+					ws.onopen = function() {
+						add("Conectado");
+					}
+					ws.onerror = function() {
+						add("Error al conectar el WS");
+					}
+					ws.onmessage = function(message) {
+						var data=message.data;
+						data=JSON.parse(data);
+						if (data.TYPE=="MATCH") {
+							add(JSON.stringify(data));
+						} else {
+							add("Mensaje desconocido");
+						}
+					}
+				}
+			};
+			request.send();
+		}
+		
+		function add(texto) {
+			var div=document.createElement("div");
+			textosRecibidos.appendChild(div);
+			div.innerHTML=texto;
+		}
+		
+		function joinGame(gameName) {
+			var request = new XMLHttpRequest();
+			request.open("GET",
+					"http://localhost:8080/joinGame?gameName=" + gameName);
+			request.onreadystatechange = function() {
+				if (request.readyState == 4) {
+					add(request.responseText);
+				}
+			};
+			request.send();
+		}
+		
+		function move(coordinate) {
+			var p = {
+				TYPE : "MOVEMENT",
+				coordinates : [ coordinate ]
+			};
+			ws.send(JSON.stringify(p));
+		}
+	</script>
+</body>
+</html>

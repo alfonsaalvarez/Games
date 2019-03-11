@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Games 2019</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+<link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+<!--===============================================================================================-->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+	integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+	crossorigin="anonymous">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="css/util.css">
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<link rel="stylesheet" type="text/css" href="css/tablero.css">
+<!--===============================================================================================-->
+</head>
+<body>
+	<br>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="contenedor">
+				<div class="wrap-login100 fill">
+					<button id="pulsarPiedra" class="btn btn-light" onclick="enviar(0)">
+						<img src="images/piedra.png" style="width: 15%;"> <span
+							style="color: black;">Piedra</span>
+					</button>
+					<br></br>
+					<button id="pulsarPapel" class="btn btn-light" onclick="enviar(1)">
+						<img src="images/papel.png" style="width: 15%;"> <span
+							style="color: black;">Papel</span>
+					</button>
+					<br></br>
+					<button id="pulsarTijera" class="btn btn-light" onclick="enviar(2)">
+						<img src="images/tijera.png" style="width: 15%;"> <span
+							style="color: black;">Tijera</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<label id= tiradaDeTuOponente style ="display:none">La tirada de tu oponente es:  <img id= imgOponente style="width: 15%;">
+			<span style="color: black;"></span>
+		</label>
+	</div>
+	<!--===============================================================================================-->
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/animsition/js/animsition.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+
+	<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/daterangepicker/moment.min.js"></script>
+	<script src="vendor/daterangepicker/daterangepicker.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/countdowntime/countdowntime.js"></script>
+	<!--===============================================================================================-->
+	<script>
+		function enviar(valor) {
+			var p = {
+				TYPE : "MOVEMENT",
+				coordinates : [ valor ]
+			};
+			ws.send(JSON.stringify(p));
+		}
+	</script>
+</body>
+</html>

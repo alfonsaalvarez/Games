@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Games 2019</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-signin-client_id"
+	content="99182502291-fe1m8c3cjse82ith0nalgb2pinoilnvk.apps.googleusercontent.com">
+<!--===============================================================================================-->
+<link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="css/util.css">
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<link rel="stylesheet" type="text/css" href="css/panel.css">
+<!--===============================================================================================-->
+<script>
+var ws;
+window.onload=function crearWs() {
+  ws = new WebSocket("ws://localhost:8080/gamews");
+  ws.onopen = function() {
+  
+  }
+  ws.onerror = function() {
+    add("Error al conectar el WS");
+  }
+  ws.onmessage = function(event){
+    var data=JSON.parse(event.data);
+    var type=data.TYPE;
+    if (type=="MATCH") {
+      if (data.winner!=null) {
+        console.log(data.winner);
+        console.log(data.winner.userName);
+        console.log(data);
+        if(data.players[0].userName == sessionStorage.userName && data.board.tiradas1.length==1){
+			mostrarFoto(data.board.tiradas2[0]);					
+		}else if(data.players[1].userName==sessionStorage.userName && data.board.tiradas1.length==1){
+			mostrarFoto(data.board.tiradas1[0]);
+		}
+        if(data.board.tiradas2[0]==data.board.tiradas1[0]){
+          alert("EMPATE");
+        }else{
+          if(sessionStorage.userName == data.winner.userName){
+            alert("GANASTE");
+          }else{
+            alert("PERDISTE");
+          }
+        } 
+      }
+    }else if(type=="MENSAJE"){
+      muestra(data);
+    }else if(type=="START_MATCH"){
+    	console.log(data);
+        mostrarSudoku(data.board.tablero);
+    }
+  }
+}
+</script>
+</head>
+<body>
+	<div class="container-login100"
+		style="background-image: url('images/bg-01.jpg');">
+		<div class="wrap-panel100 fill">
+			<div class="row">
+				<div class="col-md-3">
+					<div class="container-login100-form-btn m-t-17">
+						<button class="login100-form-btn"
+							onclick="joinGame('Piedra, papel, tijera')">
+							<i class="fa fa-gamepad m-l-5 m-r-15" aria-hidden="true"></i> PPT
+						</button>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="container-login100-form-btn m-t-17">
+						<button class="login100-form-btn" onclick="joinGame('Sudoku')">
+							<i class="fa fa-gamepad m-l-5 m-r-15" aria-hidden="true"></i>
+							Sudoku
+						</button>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="container-login100-form-btn m-t-17">
+						<button class="login100-form-btn" onclick=window.location.href="http://localhost:8080/nuevaPWD.html">
+							<i class="fa fa-key m-l-5 m-r-15" aria-hidden="true"></i> Cambiar
+							pw
+						</button>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="container-login100-form-btn m-t-17">
+						<button class="login100-form-btn" onclick="cambiar_foto">
+							<i class="fa fa-picture-o m-l-5 m-r-15" aria-hidden="true"></i>
+							Avatar
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<span data-ng-bind="estado" class="ng-binding"> </span>
+			</div>
+			<div class="row">
+				<div class="col-md-6" id="contenedor_tablero"></div>
+				<div class="col-md-6">
+					<div class="container" style="margin-top: 5%; margin-bottom: 5%">
+						<div class="card card-primary">
+							<div class="card-header">
+								<span class="glyphicon glyphicon-comment"></span> Chat de la
+								sala
+							</div>
+							<div class="card-body" id="cajaMensaje" style="height: 240px;">
+								<ul class="chat" id="chat">
+								</ul>
+							</div>
+							<div class="card-footer">
+								<div class="input-group">
+									<input id="Mensaje" type="text" class="form-control input-sm"
+										placeholder="Type your message here..." /> <span
+										class="input-group-btn">
+										<button class="btn btn-warning" id="btnEnviar"
+											onclick="enviarMensaje()">Enviar</button>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<label data-ng-bind="opponentName" class="ng-binding"> </label>
+			</div>
+			<br>
+			<div class="row">
+				<div class="container-fluid">
+					<button class="login100-form-btn" onclick=window.location.href="http://localhost:8080/index.html">
+						<i class="fa fa-power-off m-l-5 m-r-15" aria-hidden="true"></i>
+						Salir
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--===============================================================================================-->
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/animsition/js/animsition.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/daterangepicker/moment.min.js"></script>
+	<script src="vendor/daterangepicker/daterangepicker.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/countdowntime/countdowntime.js"></script>
+	<!--===============================================================================================-->
+
+	<script>	
+	    function onLoad() {
+	      gapi.load('auth2', function() {
+	        gapi.auth2.init();
+	      });
+	    }
+  	</script>
+
+	<script>
+	function joinGame(gameName) {
+		if(gameName=="Piedra, papel, tijera"){
+			  $('#contenedor_tablero').load('tableroPPT.html');
+		}else if(gameName=="Sudoku"){
+			  $('#contenedor_tablero').load('tableroSUDOKU.html');
+		}
+		var request = new XMLHttpRequest();
+		request.open("GET",
+				"http://localhost:8080/joinGame?gameName=" + gameName);
+		request.send();
+	}
+	
+	function enviarMensaje() {
+		var userName=sessionStorage.userName; 
+		var texto=document.getElementById("Mensaje").value;
+		var p= {
+				   remitente : userName,
+		           TYPE : "MENSAJE",
+		           contenido : texto
+		}
+		ws.send(JSON.stringify(p));
+		Mensaje.value="";
+		}
+	
+	function muestra(datos){
+		var areaMensajes=document.getElementById("cajaMensaje");
+		var usuario="Yo";
+		var msgMostrado=areaMensajes.innerHTML;
+		if(datos.remitente==sessionStorage.userName){
+			msgMostrado=msgMostrado+"</p><br><p>"+usuario+": "+datos.contenido+"</p><br><p>";
+		}else{
+			msgMostrado=msgMostrado+"</p><br><p>"+datos.remitente+": "+datos.contenido+"</p><br><p>";
+		}
+		areaMensajes.innerHTML=msgMostrado;
+	}
+	
+	function mostrarFoto(valor){
+		if(valor==0){
+			document.getElementById("imgOponente").src="images/piedra.png"
+		}else if(valor==1){
+			document.getElementById("imgOponente").src="images/papel.png"
+		}else if(valor==2){
+			document.getElementById("imgOponente").src="images/tijera.png"
+		}
+		document.getElementById("tiradaDeTuOponente").style.display="block";
+	}
+	
+	function mostrarSudoku(arraySudoku){
+		for (var i =0 ; i<arraySudoku.length; i++){
+			if(arraySudoku[i] !=0){
+				document.getElementById("c"+i.toString()).value = arraySudoku[i];
+			}
+		}
+	}
+	</script>
+	<script src="https://apis.google.com/js/platform.js?onload=onLoad"
+		async defer></script>
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
+
+</body>
+</html>
